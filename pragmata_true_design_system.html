@@ -1,0 +1,664 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&family=Barlow+Condensed:wght@300;400;500;600&display=swap');
+:root{
+  /* 真实色彩 — 来自官方设计图 */
+  --bg:       #e8eae6;   /* 工程图纸底色 */
+  --bg2:      #dfe1dd;   /* 略深一档面板 */
+  --bg3:      #d4d6d2;   /* 第三层 */
+  --suit:     #c8cac6;   /* 宇航服主体灰白 */
+  --suit2:    #b8bab6;   /* 宇航服暗部 */
+  --grid:     rgba(80,100,120,0.12); /* 网格线 */
+  --line:     rgba(60,80,100,0.25);  /* 标注线 */
+  --line2:    rgba(60,80,100,0.12);  /* 次级线 */
+  --text:     #1a2230;   /* 主文字 深蓝黑 */
+  --text2:    #4a5a6a;   /* 次级文字 */
+  --text3:    #8a9aaa;   /* 弱文字 */
+  /* 强调色 */
+  --yellow:   #e8a020;   /* 工程黄 — 靴子/卡扣 */
+  --yellow2:  #c88010;
+  --red-btn:  #c03020;   /* 胸甲红色按钮 */
+  --blue-btn: #2860c0;   /* 胸甲蓝色按钮 */
+  --stripe-r: #c03020;   /* 袖口红条纹 */
+  --stripe-b: #2060b0;   /* 袖口蓝条纹 */
+  --black:    #1a1e24;   /* 手套/背包黑 */
+  /* 字体 */
+  --mono: 'Space Mono', monospace;
+  --disp: 'Barlow Condensed', sans-serif;
+  --body: 'Inter', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+.root{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  min-height:100vh;
+  padding-bottom:4rem;
+  /* 工程图纸网格 */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ── 标注线风格 ── */
+.ann-line{stroke:var(--line);stroke-width:.8;stroke-dasharray:4,3;}
+.ann-arrow{fill:var(--line);}
+.ann-text{fill:var(--text2);font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.5px;}
+
+/* ── 页面顶部 ── */
+.page-top{
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  padding:2rem 2.5rem 1.5rem;
+  position:relative;
+}
+.pg-logo{
+  font-family:var(--disp);font-size:11px;font-weight:300;
+  letter-spacing:8px;text-transform:uppercase;color:var(--text2);
+  margin-bottom:.3rem;
+}
+.pg-logo em{font-style:normal;font-weight:500;color:var(--text);}
+.pg-title{
+  font-family:var(--disp);font-size:42px;font-weight:300;
+  letter-spacing:3px;color:var(--text);line-height:1;
+}
+.pg-title strong{font-weight:600;}
+.pg-sub{
+  font-family:var(--mono);font-size:9px;color:var(--text3);
+  letter-spacing:1.5px;margin-top:.8rem;
+  display:flex;gap:2rem;
+  border-top:1px solid var(--line2);padding-top:.6rem;
+}
+/* 右上角标记符号 — 模仿设计图右上角 */
+.corner-marks{
+  position:absolute;top:20px;right:24px;
+  display:flex;gap:10px;align-items:center;
+}
+.corner-sym{
+  width:28px;height:28px;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:var(--text3);
+}
+
+/* ── section ── */
+.section{padding:2rem 2.5rem 0;}
+.sec-head{
+  font-family:var(--mono);font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--text2);
+  display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;
+}
+.sec-head::before{content:'';width:14px;height:1px;background:var(--line);}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--line2);}
+
+/* ── grid ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+/* ── CARD — 工程图纸面板 ── */
+.eng-card{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  position:relative;
+}
+/* 四角十字标记 */
+.eng-card::before{
+  content:'';
+  position:absolute;inset:-4px;
+  border:none;
+  background:
+    linear-gradient(var(--line),var(--line)) top left / 8px 1px no-repeat,
+    linear-gradient(var(--line),var(--line)) top left / 1px 8px no-repeat,
+    linear-gradient(var(--line),var(--line)) top right / 8px 1px no-repeat,
+    linear-gradient(var(--line),var(--line)) top right / 1px 8px no-repeat,
+    linear-gradient(var(--line),var(--line)) bottom left / 8px 1px no-repeat,
+    linear-gradient(var(--line),var(--line)) bottom left / 1px 8px no-repeat,
+    linear-gradient(var(--line),var(--line)) bottom right / 8px 1px no-repeat,
+    linear-gradient(var(--line),var(--line)) bottom right / 1px 8px no-repeat;
+  pointer-events:none;
+}
+.card-header{
+  background:var(--bg3);
+  border-bottom:1px solid var(--line);
+  padding:8px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.card-label{font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--text2);}
+.card-id{font-family:var(--mono);font-size:8px;color:var(--text3);margin-left:auto;letter-spacing:1px;}
+.card-body{padding:14px;}
+
+/* ── 圆形按钮标记 — 来自胸甲 ── */
+.round-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;font-family:var(--mono);font-size:8px;letter-spacing:1px;
+  font-weight:700;cursor:pointer;flex-shrink:0;
+}
+.rb-red{width:22px;height:22px;background:var(--red-btn);color:#fff;border:2px solid #901810;}
+.rb-blue{width:22px;height:22px;background:var(--blue-btn);color:#fff;border:2px solid #1040a0;}
+.rb-yellow{width:18px;height:18px;background:var(--yellow);color:var(--black);border:2px solid var(--yellow2);}
+.rb-gray{width:16px;height:16px;background:var(--suit);color:var(--text2);border:1.5px solid var(--line);}
+
+/* ── 条纹标记 — 来自袖口 ── */
+.stripe-mark{height:4px;width:100%;display:flex;}
+.sm-r{flex:1;background:var(--stripe-r);}
+.sm-w{flex:1;background:var(--suit);}
+.sm-b{flex:1;background:var(--stripe-b);}
+
+/* ── 字体展示 ── */
+.type-row{
+  display:flex;align-items:baseline;gap:16px;
+  padding:12px 0;border-bottom:1px solid var(--line2);
+}
+.type-row:last-child{border-bottom:none;}
+.type-meta{
+  font-family:var(--mono);font-size:8px;color:var(--text3);
+  letter-spacing:1px;width:110px;flex-shrink:0;line-height:1.7;
+}
+.type-meta b{color:var(--text2);display:block;letter-spacing:1.5px;}
+
+/* ── Nav 样本 ── */
+.eng-nav{
+  background:var(--bg2);border-bottom:1px solid var(--line);
+  display:flex;align-items:stretch;
+}
+.nav-logo-eng{
+  font-family:var(--disp);font-size:13px;font-weight:300;
+  letter-spacing:7px;text-transform:uppercase;color:var(--text);
+  padding:11px 18px;border-right:1px solid var(--line);
+  display:flex;align-items:center;gap:6px;
+}
+.nav-logo-eng strong{font-weight:600;}
+/* 小十字靶心 logo 图标 */
+.nav-icon{width:16px;height:16px;position:relative;flex-shrink:0;}
+.nav-icon::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--text2);}
+.nav-icon::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--text2);}
+.nav-link-eng{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text3);padding:0 16px;display:flex;align-items:center;
+  border-right:1px solid var(--line2);
+}
+.nav-link-eng.active{color:var(--text);background:var(--bg);}
+.nav-link-eng.active::after{
+  content:'ACTIVE';position:absolute;
+}
+.nav-status{margin-left:auto;display:flex;align-items:center;padding:0 16px;gap:12px;}
+.nav-badge-y{
+  background:var(--yellow);color:var(--black);
+  font-family:var(--mono);font-size:8px;letter-spacing:1.5px;
+  padding:3px 10px;font-weight:700;
+}
+.nav-badge-g{
+  background:transparent;color:var(--text2);
+  font-family:var(--mono);font-size:8px;letter-spacing:1px;
+  border:1px solid var(--line);padding:3px 10px;
+}
+
+/* ── 侧边栏 ── */
+.eng-sidebar{background:var(--bg2);border-right:1px solid var(--line);padding:12px 0;}
+.sb-section-head{
+  font-family:var(--mono);font-size:7.5px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text3);padding:4px 16px 6px;border-bottom:1px solid var(--line2);margin-bottom:2px;
+}
+.sb-item{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text3);padding:7px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid transparent;
+}
+.sb-item.active{
+  background:var(--bg);color:var(--text);
+  border-left:3px solid var(--yellow);
+  padding-left:13px;
+}
+.sb-item-id{font-size:7px;color:var(--text3);}
+.sb-item.warn{color:var(--red-btn);}
+
+/* ── 数据格 ── */
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--line2);}
+.data-cell{background:var(--bg2);padding:10px 14px;border:none;}
+.data-cell+.data-cell{border-left:1px solid var(--line2);}
+.dc-label{font-family:var(--mono);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.dc-val{font-family:var(--disp);font-size:22px;font-weight:500;letter-spacing:1px;color:var(--text);line-height:1;}
+.dc-unit{font-family:var(--mono);font-size:7.5px;color:var(--text3);margin-top:2px;letter-spacing:1px;}
+.dc-val.warn{color:var(--red-btn);}
+.dc-val.caution{color:var(--yellow2);}
+
+/* ── 进度条 ── */
+.eng-bar{margin:4px 0;}
+.eb-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:1px;margin-bottom:3px;}
+.eb-track{height:3px;background:var(--line2);position:relative;}
+.eb-fill{height:100%;background:var(--text2);}
+.eb-fill.y{background:var(--yellow);}
+.eb-fill.r{background:var(--red-btn);}
+.eb-fill.b{background:var(--blue-btn);}
+/* 端点菱形 */
+.eb-fill::after{
+  content:'';position:absolute;right:0;top:-3px;
+  width:4px;height:4px;
+  background:inherit;
+  transform:rotate(45deg) translateX(2px);
+}
+
+/* ── 输入框 ── */
+.eng-input{
+  width:100%;background:var(--bg);
+  border:1px solid var(--line);color:var(--text);
+  font-family:var(--mono);font-size:10px;letter-spacing:1px;
+  padding:8px 12px;outline:none;border-radius:0;
+  display:block;margin-bottom:8px;
+}
+.eng-input:focus{border-color:var(--blue-btn);}
+.eng-input::placeholder{color:var(--text3);}
+.eng-input-label{
+  font-family:var(--mono);font-size:7.5px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text3);margin-bottom:3px;display:block;
+}
+
+/* ── 按钮 ── */
+.eng-btn{
+  display:inline-block;background:var(--text);color:var(--bg);
+  font-family:var(--mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;
+  padding:9px 20px;border:none;cursor:pointer;
+}
+.eng-btn.y{background:var(--yellow);color:var(--black);}
+.eng-btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);}
+.eng-btn.red{background:var(--red-btn);color:#fff;}
+
+/* ── token table ── */
+.token-tbl{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:9px;}
+.token-tbl tr{border-bottom:1px solid var(--line2);}
+.token-tbl tr:last-child{border-bottom:none;}
+.token-tbl td{padding:8px 12px;vertical-align:top;}
+.tk-key{color:var(--text2);width:130px;letter-spacing:.5px;}
+.tk-val{color:var(--text);letter-spacing:.3px;line-height:1.7;}
+.tk-val code{background:rgba(0,0,0,.06);padding:1px 5px;font-size:8.5px;color:var(--blue-btn);}
+.tk-note{color:var(--text3);font-size:8.5px;font-family:'Inter',sans-serif;line-height:1.5;padding-top:2px;}
+
+/* 正交视图符号 */
+.ortho-sym{display:flex;flex-direction:column;gap:5px;margin-bottom:8px;}
+.ortho-row{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:1px;}
+.ortho-box{width:14px;height:14px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:8px;}
+.ortho-x{font-size:14px;color:var(--text2);}
+
+/* ── 材质色块 ── */
+.mat-row{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;}
+.mat-item{border:1px solid var(--line);}
+.mat-swatch{height:40px;}
+.mat-info{padding:5px 7px;background:var(--bg2);}
+.mat-name{font-family:var(--mono);font-size:7.5px;letter-spacing:.5px;color:var(--text2);margin-bottom:1px;}
+.mat-hex{font-family:var(--mono);font-size:8px;color:var(--text);}
+
+/* 标注下划线 */
+.ann-underline{
+  border-bottom:1px dashed var(--line);
+  padding-bottom:1px;color:var(--text2);cursor:help;
+}
+
+</style>
+
+<div class="root">
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Pragmata 真实官方设计风格网页规范</h2>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<div class="page-top">
+  <!-- 右上角工程符号 -->
+  <div class="corner-marks">
+    <svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="13" cy="13" r="10" fill="none" stroke="rgba(60,80,100,0.3)" stroke-width="1"/>
+      <line x1="3" y1="13" x2="23" y2="13" stroke="rgba(60,80,100,0.3)" stroke-width=".8"/>
+      <line x1="13" y1="3" x2="13" y2="23" stroke="rgba(60,80,100,0.3)" stroke-width=".8"/>
+      <circle cx="13" cy="13" r="2" fill="rgba(60,80,100,0.4)"/>
+    </svg>
+    <svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="3" width="20" height="20" fill="none" stroke="rgba(60,80,100,0.3)" stroke-width="1"/>
+      <line x1="3" y1="13" x2="23" y2="13" stroke="rgba(60,80,100,0.3)" stroke-width=".8"/>
+      <line x1="13" y1="3" x2="13" y2="23" stroke="rgba(60,80,100,0.3)" stroke-width=".8"/>
+    </svg>
+    <div style="font-family:var(--mono);font-size:7px;color:var(--text3);letter-spacing:1px;line-height:1.8;text-align:right;">
+      CRADLE OPERATING SYSTEM<br>
+      S.F.A.T &nbsp; REV.2026.04<br>
+      <span style="color:var(--text2);">DESIGN SYSTEM</span>
+    </div>
+  </div>
+
+  <div class="pg-logo">P R A <em>G</em> M A T A</div>
+  <div class="pg-title">Design <strong>System</strong></div>
+  <div class="pg-sub">
+    <span>ORIGIN: OFFICIAL ART GUIDE · HUGH WILLIAMS</span>
+    <span>TYPE: ENGINEERING BLUEPRINT AESTHETIC</span>
+    <span>REV: 2026.04</span>
+  </div>
+</div>
+
+
+<!-- ═══ S1: 颜色系统 ═══ -->
+<div class="section">
+  <div class="sec-head">01 &nbsp; TRUE COLOR SYSTEM · 真实配色</div>
+
+  <!-- 关键说明 -->
+  <div style="background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.4);border-left:3px solid var(--yellow);padding:10px 16px;margin-bottom:16px;font-family:var(--mono);font-size:9px;color:var(--text2);letter-spacing:.5px;line-height:1.8;">
+    ⚠ CORRECTION: 主色调不是黑色背景+青色，而是<strong style="color:var(--text);"> 工程蓝图浅灰底 + 脏白宇航服 + 工程黄/红/蓝 强调色</strong>。参见官方 Art Guide。
+  </div>
+
+  <div class="mat-row">
+    <div class="mat-item"><div class="mat-swatch" style="background:#e8eae6;"></div><div class="mat-info"><div class="mat-name">BLUEPRINT BG</div><div class="mat-hex">#E8EAE6</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#c8cac6;"></div><div class="mat-info"><div class="mat-name">SUIT WHITE</div><div class="mat-hex">#C8CAC6</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#e8a020;"></div><div class="mat-info"><div class="mat-name">ENG. YELLOW</div><div class="mat-hex">#E8A020</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#c03020;"></div><div class="mat-info"><div class="mat-name">CONTROL RED</div><div class="mat-hex">#C03020</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#2860c0;"></div><div class="mat-info"><div class="mat-name">CONTROL BLUE</div><div class="mat-hex">#2860C0</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#1a1e24;"></div><div class="mat-info"><div class="mat-name">GLOVE BLACK</div><div class="mat-hex">#1A1E24</div></div></div>
+    <div class="mat-item"><div class="mat-swatch" style="background:#4a5a6a;"></div><div class="mat-info"><div class="mat-name">ANN. TEXT</div><div class="mat-hex">#4A5A6A</div></div></div>
+  </div>
+</div>
+
+
+<!-- ═══ S2: 设计图标注系统 ═══ -->
+<div class="section" style="margin-top:2rem;">
+  <div class="sec-head">02 &nbsp; BLUEPRINT ANNOTATION SYSTEM · 工程标注</div>
+
+  <!-- 大标注图 -->
+  <div style="background:var(--bg2);border:1px solid var(--line);padding:1rem;">
+    <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+      <!-- 网格 -->
+      <defs>
+        <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+          <path d="M28,0 L0,0 0,28" fill="none" stroke="rgba(80,100,120,0.12)" stroke-width=".5"/>
+        </pattern>
+        <marker id="arr" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto">
+          <polygon points="0,0 6,2.5 0,5" fill="rgba(60,80,100,0.4)"/>
+        </marker>
+        <marker id="arr2" markerWidth="5" markerHeight="5" refX="0" refY="2.5" orient="auto">
+          <polygon points="5,0 0,2.5 5,5" fill="rgba(60,80,100,0.4)"/>
+        </marker>
+      </defs>
+      <rect width="640" height="240" fill="url(#grid)"/>
+
+      <!-- 卡片主体 -->
+      <rect x="180" y="30" width="280" height="180" fill="#dfe1dd" stroke="rgba(60,80,100,0.25)" stroke-width="1"/>
+      <!-- 四角十字标记 -->
+      <line x1="168" y1="30" x2="180" y2="30" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="180" y1="18" x2="180" y2="30" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="460" y1="30" x2="472" y2="30" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="460" y1="18" x2="460" y2="30" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="168" y1="210" x2="180" y2="210" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="180" y1="210" x2="180" y2="222" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="460" y1="210" x2="472" y2="210" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+      <line x1="460" y1="210" x2="460" y2="222" stroke="rgba(60,80,100,0.35)" stroke-width=".8"/>
+
+      <!-- header bar -->
+      <rect x="180" y="30" width="280" height="28" fill="#d4d6d2" stroke="none"/>
+      <line x1="180" y1="58" x2="460" y2="58" stroke="rgba(60,80,100,0.25)" stroke-width="1"/>
+
+      <!-- Header text -->
+      <text x="194" y="48" fill="#1a2230" font-family="Barlow Condensed,sans-serif" font-size="13" font-weight="500" letter-spacing="3">SECTOR D-04</text>
+      <text x="390" y="46" fill="#8a9aaa" font-family="Space Mono,monospace" font-size="8" letter-spacing="1">ID: D04-2026</text>
+
+      <!-- 黄色左边条 -->
+      <rect x="180" y="58" width="4" height="152" fill="#e8a020"/>
+
+      <!-- 内容区 -->
+      <!-- 分段线 -->
+      <line x1="198" y1="100" x2="452" y2="100" stroke="rgba(60,80,100,0.15)" stroke-width=".8" stroke-dasharray="3,3"/>
+      <!-- 数据 -->
+      <text x="198" y="80" fill="#8a9aaa" font-family="Space Mono,monospace" font-size="8" letter-spacing="1">HULL INTEGRITY</text>
+      <text x="198" y="95" fill="#1a2230" font-family="Barlow Condensed,sans-serif" font-size="28" font-weight="500" letter-spacing="1">72%</text>
+      <text x="280" y="80" fill="#8a9aaa" font-family="Space Mono,monospace" font-size="8" letter-spacing="1">OXYGEN</text>
+      <text x="280" y="95" fill="#1a2230" font-family="Barlow Condensed,sans-serif" font-size="28" font-weight="500" letter-spacing="1">6.2H</text>
+      <text x="370" y="80" fill="#8a9aaa" font-family="Space Mono,monospace" font-size="8" letter-spacing="1">STATUS</text>
+      <text x="370" y="95" fill="#c03020" font-family="Barlow Condensed,sans-serif" font-size="28" font-weight="500" letter-spacing="1">LOST</text>
+
+      <!-- 进度条 -->
+      <rect x="198" y="110" width="254" height="3" fill="rgba(60,80,100,0.15)"/>
+      <rect x="198" y="110" width="183" height="3" fill="#4a5a6a"/>
+      <!-- 端点菱形 -->
+      <rect x="379" y="108" width="4" height="4" fill="#4a5a6a" transform="rotate(45,381,110)"/>
+      <text x="198" y="122" fill="#8a9aaa" font-family="Space Mono,monospace" font-size="7.5" letter-spacing="1">HULL STATUS</text>
+      <text x="432" y="122" fill="#4a5a6a" font-family="Space Mono,monospace" font-size="7.5">72%</text>
+
+      <!-- 圆形控制按钮 -->
+      <circle cx="220" cy="155" r="12" fill="#c03020" stroke="#901810" stroke-width="1.5"/>
+      <circle cx="248" cy="155" r="12" fill="#2860c0" stroke="#1040a0" stroke-width="1.5"/>
+      <circle cx="276" cy="155" r="10" fill="#c8cac6" stroke="rgba(60,80,100,0.3)" stroke-width="1"/>
+      <circle cx="300" cy="155" r="10" fill="#c8cac6" stroke="rgba(60,80,100,0.3)" stroke-width="1"/>
+
+      <!-- 袖口条纹 -->
+      <rect x="340" y="148" width="100" height="5" fill="#c03020"/>
+      <rect x="340" y="153" width="100" height="4" fill="#c8cac6"/>
+      <rect x="340" y="157" width="100" height="5" fill="#2060b0"/>
+
+      <!-- 黄色角扣 -->
+      <rect x="430" y="168" width="18" height="12" fill="#e8a020" stroke="#c88010" stroke-width="1"/>
+      <rect x="418" y="170" width="12" height="8" fill="#c88010"/>
+
+      <!-- ── 标注线 ── -->
+      <!-- 四角十字 -->
+      <line x1="104" y1="30" x2="176" y2="30" stroke="rgba(60,80,100,0.3)" stroke-width=".7" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+      <text x="50" y="29" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">CORNER REG.</text>
+
+      <!-- 黄色条 -->
+      <line x1="100" y1="130" x2="178" y2="130" stroke="rgba(60,80,100,0.3)" stroke-width=".7" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+      <text x="20" y="129" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">YELLOW BAND</text>
+      <text x="20" y="139" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">4px ACCENT</text>
+
+      <!-- 圆形按钮 -->
+      <line x1="220" y1="175" x2="220" y2="212" stroke="rgba(60,80,100,0.3)" stroke-width=".7" stroke-dasharray="4,3"/>
+      <line x1="220" y1="212" x2="90" y2="212" stroke="rgba(60,80,100,0.3)" stroke-width=".7"/>
+      <text x="20" y="211" fill="#c03020" font-family="Space Mono,monospace" font-size="7.5">RED / BLUE BTN</text>
+      <text x="20" y="221" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">CONTROL MARK</text>
+
+      <!-- 条纹 -->
+      <line x1="390" y1="153" x2="390" y2="232" stroke="rgba(60,80,100,0.3)" stroke-width=".7" stroke-dasharray="4,3"/>
+      <line x1="390" y1="232" x2="490" y2="232" stroke="rgba(60,80,100,0.3)" stroke-width=".7"/>
+      <text x="492" y="231" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">SLEEVE STRIPE</text>
+      <text x="492" y="241" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">R/W/B SEQUENCE</text>
+
+      <!-- 黄色角扣 -->
+      <line x1="462" y1="174" x2="530" y2="174" stroke="rgba(60,80,100,0.3)" stroke-width=".7" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+      <text x="532" y="173" fill="#e8a020" font-family="Space Mono,monospace" font-size="7.5">LATCH YELLOW</text>
+      <text x="532" y="183" fill="#6a7a8a" font-family="Space Mono,monospace" font-size="7.5">STRUCTURAL MARK</text>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ═══ S3: NAV + LAYOUT ═══ -->
+<div class="section" style="margin-top:2rem;">
+  <div class="sec-head">03 &nbsp; NAVIGATION + LAYOUT · 实际界面</div>
+  <div style="border:1px solid var(--line);">
+    <div class="eng-nav">
+      <div class="nav-logo-eng">
+        <div class="nav-icon"></div>
+        PRAGMA<strong>TA</strong>
+      </div>
+      <div class="nav-link-eng active">SECTOR</div>
+      <div class="nav-link-eng">SYSTEMS</div>
+      <div class="nav-link-eng">PERSONNEL</div>
+      <div class="nav-link-eng">ARCHIVE</div>
+      <div class="nav-status">
+        <div class="nav-badge-y">⚠ HULL WARN</div>
+        <div class="nav-badge-g">SYS NOMINAL</div>
+        <!-- 正交视图符号 -->
+        <div style="display:flex;gap:4px;margin-left:6px;">
+          <div style="width:12px;height:12px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:var(--text3);">×</div>
+          <div style="width:12px;height:12px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:var(--text3);">□</div>
+        </div>
+      </div>
+    </div>
+    <!-- body -->
+    <div style="display:grid;grid-template-columns:160px 1fr;background:var(--bg);">
+      <div class="eng-sidebar">
+        <div class="sb-section-head">SECTORS</div>
+        <div class="sb-item active">SECTOR D-4 <span class="sb-item-id">D04</span></div>
+        <div class="sb-item">SECTOR D-5 <span class="sb-item-id">D05</span></div>
+        <div class="sb-item">SECTOR E-1 <span class="sb-item-id">E01</span></div>
+        <div class="sb-item warn">SECTOR E-2 <span class="sb-item-id" style="color:inherit;">E02</span></div>
+        <div class="sb-section-head" style="margin-top:8px;">ACCESS</div>
+        <div class="sb-item">AIRLOCK B <span class="sb-item-id">AL-B</span></div>
+        <div class="sb-item">CORE <span class="sb-item-id">CR-1</span></div>
+      </div>
+      <div style="padding:20px;background:var(--bg);">
+        <!-- breadcrumb -->
+        <div style="font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:14px;">
+          CRADLE <span style="color:var(--line);">›</span> SECTOR <span style="color:var(--line);">›</span> <span style="color:var(--text);">D-04</span>
+        </div>
+        <!-- data grid -->
+        <div class="data-grid" style="margin-bottom:14px;">
+          <div class="data-cell"><div class="dc-label">HULL INTEGRITY</div><div class="dc-val">72<span style="font-size:14px;font-weight:300;">%</span></div><div class="dc-unit">STRUCTURAL</div></div>
+          <div class="data-cell"><div class="dc-label">ACTIVE THREATS</div><div class="dc-val caution">04</div><div class="dc-unit">ROGUE UNITS</div></div>
+          <div class="data-cell"><div class="dc-label">EARTH COMMS</div><div class="dc-val warn">LOST</div><div class="dc-unit">SIGNAL STATUS</div></div>
+        </div>
+        <!-- bars -->
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="eng-bar"><div class="eb-head"><span>OXYGEN RESERVE</span><span>6.2H</span></div><div class="eb-track"><div class="eb-fill" style="width:78%;position:relative;"></div></div></div>
+          <div class="eng-bar"><div class="eb-head"><span>POWER GRID</span><span style="color:var(--yellow2);">45%</span></div><div class="eb-track"><div class="eb-fill y" style="width:45%;position:relative;"></div></div></div>
+          <div class="eng-bar"><div class="eb-head"><span>BREACH RISK</span><span style="color:var(--red-btn);">HIGH</span></div><div class="eb-track"><div class="eb-fill r" style="width:72%;position:relative;"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ S4: 组件 ═══ -->
+<div class="section" style="margin-top:2rem;">
+  <div class="sec-head">04 &nbsp; COMPONENTS · 控制界面元素</div>
+  <div class="g3">
+
+    <!-- 按钮 -->
+    <div class="eng-card">
+      <div class="card-header"><div class="card-label">BUTTONS</div><div class="card-id">CTL-01</div></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:8px;">
+        <div><div class="eng-btn" style="display:block;text-align:center;margin-bottom:6px;">EXECUTE COMMAND</div></div>
+        <div><div class="eng-btn y" style="display:block;text-align:center;margin-bottom:6px;">INITIATE SCAN</div></div>
+        <div><div class="eng-btn ghost" style="display:block;text-align:center;margin-bottom:6px;">ABORT SEQUENCE</div></div>
+        <div><div class="eng-btn red" style="display:block;text-align:center;">EMERGENCY LOCK</div></div>
+      </div>
+    </div>
+
+    <!-- 圆形控制标记 -->
+    <div class="eng-card">
+      <div class="card-header"><div class="card-label">CONTROL MARKS</div><div class="card-id">CTL-02</div></div>
+      <div class="card-body">
+        <div style="font-family:var(--mono);font-size:8px;color:var(--text3);letter-spacing:1px;margin-bottom:10px;">FROM SUIT CHEST PANEL:</div>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;">
+          <div class="round-btn rb-red"></div>
+          <div class="round-btn rb-blue"></div>
+          <div class="round-btn rb-yellow"></div>
+          <div class="round-btn rb-gray"></div>
+          <div class="round-btn rb-gray"></div>
+        </div>
+        <div style="height:1px;background:var(--line2);margin-bottom:12px;"></div>
+        <div style="font-family:var(--mono);font-size:8px;color:var(--text3);margin-bottom:8px;">SLEEVE STRIPE DIVIDER:</div>
+        <div class="stripe-mark"></div>
+        <div style="display:flex;font-family:var(--mono);font-size:7.5px;color:var(--text3);margin-top:4px;gap:2px;">
+          <span style="flex:1;">R</span><span style="flex:1;">W</span><span style="flex:1;">B</span>
+        </div>
+        <div style="margin-top:12px;font-family:var(--mono);font-size:8px;color:var(--text3);margin-bottom:6px;">ENGINEERING LATCH:</div>
+        <div style="display:flex;gap:6px;">
+          <div style="width:30px;height:18px;background:var(--yellow);border:1.5px solid var(--yellow2);"></div>
+          <div style="width:20px;height:18px;background:var(--yellow2);"></div>
+          <div style="font-family:var(--mono);font-size:7.5px;color:var(--text3);align-self:center;">BOOT LATCH YELLOW</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 输入 + 正交符号 -->
+    <div class="eng-card">
+      <div class="card-header"><div class="card-label">INPUT + MARKS</div><div class="card-id">CTL-03</div></div>
+      <div class="card-body">
+        <label class="eng-input-label">ACCESS CODE</label>
+        <input class="eng-input" placeholder="ENTER CODE..."/>
+        <label class="eng-input-label">COORDINATES</label>
+        <input class="eng-input" placeholder="00.000° N / 00.000° E"/>
+        <div style="height:1px;background:var(--line2);margin:10px 0;"></div>
+        <!-- 正交视图符号 -->
+        <div style="font-family:var(--mono);font-size:8px;color:var(--text3);margin-bottom:6px;">ORTHOGRAPHIC MARKS:</div>
+        <div class="ortho-sym">
+          <div class="ortho-row">
+            <div class="ortho-x">×</div>
+            <span>CROSS-HAIR MARKER</span>
+          </div>
+          <div class="ortho-row">
+            <div class="ortho-box">□</div>
+            <span>VIEW REG. MARK</span>
+          </div>
+          <div class="ortho-row">
+            <div class="ortho-box" style="width:20px;height:12px;border-style:dashed;">□</div>
+            <span>OPTIONAL / HIDDEN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══ S5: CSS TOKENS ═══ -->
+<div class="section" style="margin-top:2rem;">
+  <div class="sec-head">05 &nbsp; CSS DESIGN TOKENS · 可复用属性</div>
+  <div style="background:var(--bg2);border:1px solid var(--line);">
+    <table class="token-tbl">
+      <tr>
+        <td class="tk-key">bg-blueprint</td>
+        <td>
+          <div class="tk-val"><code>#e8eae6</code> + grid <code>repeating linear-gradient 28px</code></div>
+          <div class="tk-note">工程图纸底色 — 不是黑色！浅灰+网格是整套风格的基础</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">corner-reg</td>
+        <td>
+          <div class="tk-val"><code>background: linear-gradient lines</code> 四角各 8px 十字</div>
+          <div class="tk-note">正交注册标记 — 模仿设计图四角对齐符号，用 background 伪造无需额外元素</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">yellow-accent</td>
+        <td>
+          <div class="tk-val"><code>#e8a020</code> — border-left 4px / header-bg / btn-primary</div>
+          <div class="tk-note">工程黄 = 靴子卡扣色 = 结构性强调，不是装饰色。CTA 首选</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">control-marks</td>
+        <td>
+          <div class="tk-val">圆形 badge: <code>border-radius:50%</code> + <code>red #c03020</code> / <code>blue #2860c0</code></div>
+          <div class="tk-note">来自胸甲圆形按钮 — 用于状态标记、标签、操作锚点</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">sleeve-stripe</td>
+        <td>
+          <div class="tk-val"><code>red / white / blue</code> 三色等分水平条纹，高 3-5px</div>
+          <div class="tk-note">袖口条纹 → 分隔线、section divider。比单线更有识别度</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">ann-line</td>
+        <td>
+          <div class="tk-val"><code>stroke-dasharray: 4,3</code> + <code>rgba(60,80,100,.3)</code> + arrowhead</div>
+          <div class="tk-note">标注引线 — 出现在 tooltip、图表说明、设计图解说中</div>
+        </td>
+      </tr>
+      <tr>
+        <td class="tk-key">sidebar-active</td>
+        <td>
+          <div class="tk-val"><code>border-left: 3px solid #e8a020</code> + <code>bg: var(--bg)</code></div>
+          <div class="tk-note">黄色左边条激活 — 对应靴子/卡扣的工程黄结构定位线</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ 结语 ═══ -->
+<div class="section" style="margin-top:2rem;">
+  <div style="background:var(--bg2);border:1px solid var(--line);border-left:4px solid var(--yellow);padding:1rem 1.4rem;font-family:var(--mono);font-size:9px;color:var(--text2);line-height:2;letter-spacing:.5px;">
+    <span style="color:var(--text);font-weight:700;">SYNTHESIS</span> &nbsp;
+    Pragmata 的真实视觉语言 = <span style="color:var(--yellow2);">NASA工程蓝图</span> × <span style="color:var(--blue-btn);">Apollo 时代宇航服美学</span> × <span style="color:var(--red-btn);">苏联工业控制面板</span>。
+    浅灰底色·工程网格·黄色结构锁扣·红蓝圆形控制钮·袖口三色条纹·四角注册标记 ——
+    <span style="color:var(--text);">这六个元素组合在一起，才是 Pragmata 的设计语言。</span>
+  </div>
+</div>
+
+</div>

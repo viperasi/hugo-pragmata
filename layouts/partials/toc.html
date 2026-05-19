@@ -1,0 +1,6 @@
+{{ if and .TableOfContents (ge (len .TableOfContents) 100) }}
+<div class="toc-panel">
+  <div class="toc-label">TABLE OF CONTENTS</div>
+  {{ .TableOfContents }}
+</div>
+{{ end }}

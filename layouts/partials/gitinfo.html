@@ -1,0 +1,18 @@
+{{ with .GitInfo }}
+{{ $git := site.Params.git_info }}
+{{ $commitUrl := "" }}
+{{ with $git }}
+{{ $commitUrl = printf "https://%s.com/%s/%s/-/commit/%s" .host .user .repo $.GitInfo.Hash }}
+{{ end }}
+<div class="gitinfo">
+  <span>{{ $.Type | default "PAGE" | upper }} UPDATED {{ .AuthorDate.Format "2006-01-02" }}</span>
+  <span>
+    {{ if $commitUrl }}
+    <a href="{{ $commitUrl }}" target="_blank">#{{ .AbbreviatedHash }}</a>
+    {{ else }}
+    #{{ .AbbreviatedHash }}
+    {{ end }}
+    {{ .Subject }}
+  </span>
+</div>
+{{ end }}

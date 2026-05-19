@@ -1,0 +1,55 @@
+{{ define "body" }}
+<div class="page-body full-width">
+  <div class="article-layout">
+    <aside class="article-toc eng-sidebar">
+      {{ if and .TableOfContents (ge (len .TableOfContents) 100) }}
+      <div class="sb-section-head">TABLE OF CONTENTS</div>
+      <div class="toc-sidebar-nav">
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+
+      {{ with .Params.tags }}
+      <div class="sb-section-head" style="margin-top:8px;">TAGS</div>
+      {{ range $ti, $tag := . }}
+      <a href="{{ "tags/" | relURL }}{{ $tag | urlize }}" class="sb-item">
+        <span style="display:inline-flex;align-items:center;gap:4px;">
+          <span class="tag-dot{{ if eq (mod $ti 3) 0 }} red{{ else if eq (mod $ti 3) 1 }} blue{{ else }} gray{{ end }}" style="width:8px;height:8px;"></span>
+          {{ $tag | upper }}
+        </span>
+      </a>
+      {{ end }}
+      {{ end }}
+    </aside>
+    <main class="article-detail">
+      {{ partial "breadcrumb.html" . }}
+
+      <header>
+        <h1 class="article-title">{{ .Title }}</h1>
+        <div class="article-meta">
+          <span>DATE: {{ .Date.Format "2006-01-02" }}</span>
+          <span>READ: {{ .ReadingTime }} MIN</span>
+          {{ with .Type }}<span>CAT: {{ . | upper }}</span>{{ end }}
+        </div>
+        <div class="stripe-divider">
+          <div class="stripe-r"></div>
+          <div class="stripe-w"></div>
+          <div class="stripe-b"></div>
+        </div>
+      </header>
+
+      <article class="article-content">
+        {{ .Content }}
+      </article>
+
+      <div class="stripe-divider" style="margin-top:2rem;">
+        <div class="stripe-r"></div>
+        <div class="stripe-w"></div>
+        <div class="stripe-b"></div>
+      </div>
+
+      {{ partial "gitinfo.html" . }}
+    </main>
+  </div>
+</div>
+{{ end }}

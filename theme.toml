@@ -1,0 +1,11 @@
+name = "pragmata"
+license = "MIT"
+description = "Pragmata design system Hugo theme - NASA blueprint × Apollo spacesuit aesthetic"
+homepage = "https://www.xu81.com/"
+tags = ["blog", "engineering", "blueprint"]
+features = ["responsive", "sidebar", "projects"]
+min_version = "0.112.0"
+
+[author]
+name = "viperasi"
+homepage = "https://www.xu81.com/"

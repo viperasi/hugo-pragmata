@@ -1,0 +1,13 @@
+<div class="breadcrumb">
+  CRADLE
+  {{ range .Ancestors.Reverse }}
+  <span class="sep">›</span>
+  {{ if .RelPermalink }}
+  <a href="{{ .RelPermalink }}">{{ .Title | upper }}</a>
+  {{ else }}
+  <span>{{ .Title | upper }}</span>
+  {{ end }}
+  {{ end }}
+  <span class="sep">›</span>
+  <span class="current">{{ .Title }}</span>
+</div>

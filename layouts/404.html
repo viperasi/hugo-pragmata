@@ -1,0 +1,28 @@
+{{ define "body" }}
+<div class="error-panel">
+  <div class="error-card">
+    <div class="card-header">
+      <span class="error-alert-dot">!</span>
+      <span class="card-label" style="color:var(--red-btn);">SYSTEM ALERT</span>
+      <span class="card-date">ERR-404</span>
+    </div>
+    <div class="card-body">
+      <div class="breadcrumb" style="margin-bottom:16px;">
+        CRADLE <span class="sep">›</span> ERROR <span class="sep">›</span> <span class="current" style="color:var(--red-btn);">404</span>
+      </div>
+      <div class="error-code">404</div>
+      <div class="error-title">SECTOR NOT FOUND</div>
+      <div class="error-desc">
+        THE REQUESTED SECTOR DOES NOT EXIST<br>
+        OR HAS BEEN DECOMMISSIONED.
+      </div>
+      <div class="stripe-divider">
+        <div class="stripe-r"></div>
+        <div class="stripe-w"></div>
+        <div class="stripe-b"></div>
+      </div>
+      <a href="{{ "/" | relURL }}" class="eng-btn yellow">RETURN TO CRADLE</a>
+    </div>
+  </div>
+</div>
+{{ end }}

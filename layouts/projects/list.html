@@ -1,0 +1,36 @@
+{{ define "body" }}
+<div class="page-body full-width">
+  <main class="page-content">
+    {{ partial "breadcrumb.html" . }}
+
+    <div class="sec-head">{{ .Title | upper }}</div>
+
+    <div class="project-grid">
+      {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="project-card">
+        <div class="card-header">
+          <span class="card-label">{{ .Title | upper }}</span>
+          {{ with .Params.project_id }}
+          <span class="card-date">ID: {{ . }}</span>
+          {{ end }}
+        </div>
+        <div class="card-body">
+          {{ with .Description }}
+          <div class="card-summary" style="font-size:11px;">{{ . }}</div>
+          {{ end }}
+          {{ with .Params.url }}
+          <span class="project-link">VIEW PROJECT →</span>
+          {{ end }}
+        </div>
+      </a>
+      {{ end }}
+    </div>
+
+    <div class="stripe-divider" style="margin-top:1.5rem;">
+      <div class="stripe-r"></div>
+      <div class="stripe-w"></div>
+      <div class="stripe-b"></div>
+    </div>
+  </main>
+</div>
+{{ end }}

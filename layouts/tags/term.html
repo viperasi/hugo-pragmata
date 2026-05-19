@@ -1,0 +1,40 @@
+{{ define "body" }}
+<div class="page-body full-width">
+  <main class="page-content">
+    {{ partial "breadcrumb.html" . }}
+
+    <div class="sec-head">TAG: {{ .Title | upper }} — {{ len .Pages }} POSTS</div>
+
+    {{ range $i, $page := .Pages }}
+    <a href="{{ $page.RelPermalink }}" class="eng-card{{ if eq $i 0 }} card-accent{{ end }}">
+      <div class="card-header">
+        <span class="card-label">{{ $page.Type | upper }}</span>
+        <span class="card-date">{{ $page.Date.Format "2006-01-02" }}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">{{ $page.Title }}</div>
+        {{ with $page.Description }}
+        <div class="card-summary">{{ . }}</div>
+        {{ end }}
+        {{ with $page.Params.tags }}
+        <div class="tag-list">
+          {{ range $ti, $tag := . }}
+          <span class="tag-item">
+            <span class="tag-dot{{ if eq (mod $ti 3) 0 }} red{{ else if eq (mod $ti 3) 1 }} blue{{ else }} gray{{ end }}"></span>
+            <span class="tag-name">{{ $tag }}</span>
+          </span>
+          {{ end }}
+        </div>
+        {{ end }}
+      </div>
+    </a>
+    {{ end }}
+
+    <div class="stripe-divider" style="margin-top:1.5rem;">
+      <div class="stripe-r"></div>
+      <div class="stripe-w"></div>
+      <div class="stripe-b"></div>
+    </div>
+  </main>
+</div>
+{{ end }}

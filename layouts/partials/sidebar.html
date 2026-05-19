@@ -1,0 +1,16 @@
+<aside class="eng-sidebar">
+  {{ with .Site.Taxonomies.tags }}
+  <div class="sb-section-head">TAGS</div>
+  {{ range $name, $taxonomy := . }}
+  <a href="{{ "tags/" | relURL }}{{ $name | urlize }}" class="sb-item">
+    {{ $name | upper }}
+    <span class="sb-count">{{ printf "%02d" (len $taxonomy.Pages) }}</span>
+  </a>
+  {{ end }}
+  {{ end }}
+
+  <div class="sb-section-head" style="margin-top:8px;">NAVIGATE</div>
+  {{ range .Site.Menus.main }}
+  <a href="{{ .URL }}" class="sb-item">{{ .Name | upper }}</a>
+  {{ end }}
+</aside>

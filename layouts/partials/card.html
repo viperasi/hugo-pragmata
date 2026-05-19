@@ -1,0 +1,22 @@
+<a href="{{ .RelPermalink }}" class="eng-card{{ if .IsHome }} card-accent{{ end }}">
+  <div class="card-header">
+    <span class="card-label">{{ .Type | upper }}</span>
+    <span class="card-date">{{ .Date.Format "2006-01-02" }}</span>
+  </div>
+  <div class="card-body">
+    <div class="card-title">{{ .Title }}</div>
+    {{ with .Description }}
+    <div class="card-summary">{{ . }}</div>
+    {{ end }}
+    {{ with .Params.tags }}
+    <div class="tag-list">
+      {{ range $i, $tag := . }}
+      <span class="tag-item">
+        <span class="tag-dot{{ if eq (mod $i 3) 0 }} red{{ else if eq (mod $i 3) 1 }} blue{{ else }} gray{{ end }}"></span>
+        <span class="tag-name">{{ $tag }}</span>
+      </span>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</a>

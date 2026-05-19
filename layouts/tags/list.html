@@ -1,0 +1,43 @@
+{{ define "body" }}
+<div class="page-body full-width">
+  <main class="page-content" style="text-align:center;">
+    {{ partial "breadcrumb.html" . }}
+
+    <div class="sec-head" style="justify-content:center;">{{ .Title | upper }}</div>
+
+    <div class="tag-cloud">
+      {{ $max := 0 }}
+      {{ $min := 999 }}
+      {{ range .Pages }}
+        {{ $count := len .Pages }}
+        {{ if gt $count $max }}{{ $max = $count }}{{ end }}
+        {{ if lt $count $min }}{{ $min = $count }}{{ end }}
+      {{ end }}
+
+      {{ range .Pages }}
+        {{ $count := len .Pages }}
+        {{ $size := 12 }}
+        {{ if gt $max $min }}
+          {{ $ratio := div (sub $count $min) (sub $max $min) }}
+          {{ $size = add 12 (mul 22 $ratio) }}
+        {{ end }}
+        {{ $weight := "400" }}
+        {{ if ge $count (mul $max 0.6) }}{{ $weight = "600" }}{{ else if ge $count (mul $max 0.3) }}{{ $weight = "500" }}{{ end }}
+        {{ $color := "gray" }}
+        {{ if ge $count (mul $max 0.7) }}{{ $color = "red" }}{{ else if ge $count (mul $max 0.4) }}{{ $color = "blue" }}{{ end }}
+        <a href="{{ .RelPermalink }}" class="tag-cloud-item" style="font-size:{{ printf "%.0f" $size }}px;font-weight:{{ $weight }};">
+          <span class="tag-cloud-dot tag-dot {{ $color }}"></span>
+          {{ .Title }}
+          <span class="tag-cloud-count">{{ $count }}</span>
+        </a>
+      {{ end }}
+    </div>
+
+    <div class="stripe-divider" style="max-width:400px;margin:1.5rem auto;">
+      <div class="stripe-r"></div>
+      <div class="stripe-w"></div>
+      <div class="stripe-b"></div>
+    </div>
+  </main>
+</div>
+{{ end }}
