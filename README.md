@@ -21,6 +21,12 @@ A Hugo theme inspired by NASA blueprint drawings, Apollo and Pragmata spacesuit 
 - **Custom 404 page** — themed error panel
 - **SEO-ready** — Open Graph meta, canonical URLs, RSS feed
 
+## Screenshot
+
+![homepage](https://raw.githubusercontent.com/viperasi/hugo-pragmata/refs/heads/main/images/img01.png)
+
+![post](https://raw.githubusercontent.com/viperasi/hugo-pragmata/refs/heads/main/images/img02.png)
+
 ## Installation
 
 ```bash
