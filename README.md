@@ -1,6 +1,6 @@
 # Hugo Pragmata
 
-A Hugo theme inspired by NASA blueprint drawings, Apollo spacesuit panels, and Soviet control room aesthetics. Clean engineering-grade typography on a grid-paper background.
+A Hugo theme inspired by NASA blueprint drawings, Apollo and Pragmata spacesuit panels, and Soviet control room aesthetics. Clean engineering-grade typography on a grid-paper background.
 
 **Demo:** [https://www.xu81.com](https://www.xu81.com)
 

@@ -1,8 +1,8 @@
 name = "pragmata"
 license = "MIT"
-description = "Pragmata design system Hugo theme - NASA blueprint × Apollo spacesuit aesthetic"
+description = "Pragmata design system Hugo theme - NASA blueprint × Pragmata spacesuit aesthetic"
 homepage = "https://www.xu81.com/"
-tags = ["blog", "engineering", "blueprint"]
+tags = ["blog", "engineering", "blueprint", "pragmata"]
 features = ["responsive", "sidebar", "projects"]
 min_version = "0.112.0"
 
