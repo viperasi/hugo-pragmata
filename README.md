@@ -1,4 +1,4 @@
-# Pragmata
+# Hugo Pragmata
 
 A Hugo theme inspired by NASA blueprint drawings, Apollo spacesuit panels, and Soviet control room aesthetics. Clean engineering-grade typography on a grid-paper background.
 
@@ -25,13 +25,13 @@ A Hugo theme inspired by NASA blueprint drawings, Apollo spacesuit panels, and S
 
 ```bash
 cd your-hugo-site
-git clone https://github.com/viperasi/hugo-pragmata.git themes/pragmata
+git clone https://github.com/viperasi/hugo-pragmata.git themes/hugo-pragmata
 ```
 
 Then set the theme in your site config:
 
 ```bash
-echo "theme = 'pragmata'" >> hugo.toml
+echo "theme = 'hugo-pragmata'" >> hugo.toml
 ```
 
 ## Configuration
@@ -39,7 +39,7 @@ echo "theme = 'pragmata'" >> hugo.toml
 ```toml
 baseURL = "https://example.com/"
 title = "YOUR SITE TITLE"
-theme = "pragmata"
+theme = "hugo-pragmata"
 languageCode = "en"
 
 enableGitInfo = true
