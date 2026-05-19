@@ -1,5 +1,6 @@
 name = "pragmata"
 license = "MIT"
+licenselink = "https://raw.githubusercontent.com/viperasi/hugo-pragmata/refs/heads/main/LICENSE"
 description = "Pragmata design system Hugo theme - NASA blueprint × Pragmata spacesuit aesthetic"
 homepage = "https://www.xu81.com/"
 tags = ["blog", "engineering", "blueprint", "pragmata"]
