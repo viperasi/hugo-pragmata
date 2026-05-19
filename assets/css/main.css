@@ -228,7 +228,12 @@ img { max-width: 100%; height: auto; }
   cursor: pointer;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 4px;
+  margin-left: auto;
+  min-width: 48px;
+  min-height: 40px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-hamburger span {
@@ -584,6 +589,16 @@ img { max-width: 100%; height: auto; }
   font-size: 15px;
   color: var(--text);
   line-height: 1.8;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.article-content img {
+  max-width: 100%;
+  height: auto;
+}
+.article-content pre {
+  max-width: 100%;
 }
 
 .article-content h2 {
@@ -991,6 +1006,7 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 768px) {
   .nav-link,
   .nav-status { display: none; }
+  .nav-mobile .nav-link { display: block; }
 
   .nav-hamburger { display: flex; }
 
