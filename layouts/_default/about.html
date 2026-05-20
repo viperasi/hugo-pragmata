@@ -1,0 +1,42 @@
+{{ define "body" }}
+<div class="page-body full-width">
+  <div class="article-layout">
+    <aside class="article-toc eng-sidebar">
+      {{ if and .TableOfContents (ge (len .TableOfContents) 100) }}
+      <div class="sb-section-head">TABLE OF CONTENTS</div>
+      <div class="toc-sidebar-nav">
+        {{ .TableOfContents }}
+      </div>
+      {{ end }}
+    </aside>
+    <main class="article-detail">
+      {{ partial "breadcrumb.html" . }}
+
+      <header>
+        <h1 class="article-title">{{ .Title }}</h1>
+        <div class="stripe-divider">
+          <div class="stripe-r"></div>
+          <div class="stripe-w"></div>
+          <div class="stripe-b"></div>
+        </div>
+      </header>
+
+      <article class="article-content about-content">
+        <div class="about-text">
+          {{ .Content }}
+        </div>
+        <div class="about-moon">
+          <canvas id="moonCanvas" width="340" height="340"></canvas>
+          <div class="moon-label">LUNAR ORBIT · TRACKING</div>
+        </div>
+      </article>
+
+      <div class="stripe-divider" style="margin-top:2rem;">
+        <div class="stripe-r"></div>
+        <div class="stripe-w"></div>
+        <div class="stripe-b"></div>
+      </div>
+    </main>
+  </div>
+</div>
+{{ end }}

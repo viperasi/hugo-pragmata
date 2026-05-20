@@ -757,10 +757,10 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ── Project Grid ── */
-.project-grid {
+.card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(var(--list-columns, 2), 1fr);
+  gap: 12px;
 }
 
 .project-card {
@@ -1024,7 +1024,7 @@ img { max-width: 100%; height: auto; }
 
   .article-title { font-size: 24px; }
 
-  .project-grid { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
 
   .data-grid { grid-template-columns: 1fr; }
 }
@@ -1033,6 +1033,52 @@ img { max-width: 100%; height: auto; }
   .article-title { font-size: 20px; }
 
   .card-title { font-size: 15px; }
+}
+
+/* ── About Page ── */
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  align-items: start;
+}
+.about-moon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 120px;
+}
+#moonCanvas {
+  width: 340px;
+  height: 340px;
+}
+.moon-label {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--text3);
+  border: 1px solid var(--line2);
+  padding: 3px 10px;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+  }
+  .about-moon {
+    position: static;
+    order: 1;
+    padding-top: 2rem;
+  }
+  .about-text {
+    order: 0;
+  }
+  #moonCanvas {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 /* ── Tag Cloud ── */

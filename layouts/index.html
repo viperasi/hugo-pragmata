@@ -5,9 +5,11 @@
     {{ partial "breadcrumb.html" . }}
 
     {{ $pages := where .Site.RegularPages "Type" "posts" }}
+    <div class="card-grid">
     {{ range $i, $page := $pages }}
       {{ template "card-with-idx" (dict "page" $page "idx" $i) }}
     {{ end }}
+    </div>
 
     <div class="stripe-divider">
       <div class="stripe-r"></div>

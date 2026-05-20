@@ -1,11 +1,129 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
 {{ partial "head.html" . }}
-<body>
+<body style="--list-columns: {{ .Site.Params.list_columns | default 2 }}">
   {{ partial "nav.html" . }}
   {{ block "body" . }}{{ end }}
   {{ partial "footer.html" . }}
   <script>
+  // Rotating moon globe
+  (function() {
+    var canvas = document.getElementById('moonCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height, R = W/2 - 10, cx = W/2, cy = H/2;
+    var offset = 0;
+
+    var maria = [
+      {lat:35,lon:-18,r:22},{lat:28,lon:18,r:16},{lat:10,lon:30,r:18},
+      {lat:-15,lon:-15,r:20},{lat:20,lon:45,r:14},{lat:-5,lon:50,r:12},
+      {lat:45,lon:-60,r:18},{lat:-20,lon:-50,r:16},{lat:5,lon:-40,r:14},
+      {lat:-30,lon:80,r:16},{lat:15,lon:-80,r:14},{lat:-10,lon:120,r:18},
+      {lat:40,lon:100,r:12},{lat:-40,lon:-100,r:14},{lat:25,lon:140,r:10},
+      {lat:-25,lon:-130,r:12},{lat:50,lon:70,r:10},{lat:-45,lon:60,r:14},
+    ];
+    var craters = [
+      {lat:-45,lon:-10,r:8},{lat:50,lon:60,r:6},{lat:-60,lon:40,r:7},
+      {lat:30,lon:-50,r:5},{lat:15,lon:80,r:6},{lat:-35,lon:-80,r:5},
+      {lat:55,lon:-30,r:5},{lat:-10,lon:160,r:6},{lat:40,lon:130,r:5},
+      {lat:-50,lon:-120,r:7},{lat:60,lon:20,r:4},{lat:-15,lon:-150,r:5},
+      {lat:35,lon:170,r:4},{lat:-40,lon:140,r:5},{lat:25,lon:-120,r:6},
+    ];
+
+    function featureAt(lat, lon) {
+      for (var i = 0; i < maria.length; i++) {
+        var m = maria[i], dlat = lat - m.lat, dlon = lon - m.lon;
+        if (dlat*dlat + dlon*dlon*0.7 < m.r*m.r) return 'mare';
+      }
+      for (var i = 0; i < craters.length; i++) {
+        var c = craters[i], dlat = lat - c.lat, dlon = lon - c.lon;
+        var d2 = dlat*dlat + dlon*dlon*0.7;
+        if (d2 < c.r*c.r) return 'crater';
+        if (d2 < (c.r*1.5)*(c.r*1.5)) return 'rim';
+      }
+      return null;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var grad = ctx.createRadialGradient(cx-25, cy-35, 10, cx, cy, R);
+      grad.addColorStop(0, 'rgba(245,243,238,0.9)');
+      grad.addColorStop(0.5, 'rgba(235,232,225,0.85)');
+      grad.addColorStop(0.85, 'rgba(210,207,198,0.8)');
+      grad.addColorStop(1, 'rgba(190,187,178,0.75)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      var step = 4;
+      for (var lat = -85; lat <= 85; lat += step) {
+        for (var lon = -180; lon < 180; lon += step) {
+          var ft = featureAt(lat, lon);
+          if (!ft) continue;
+          var vizLon = ((lon + offset) % 360 + 360) % 360 - 180;
+          var phi = (90 - lat) * Math.PI / 180;
+          var theta = vizLon * Math.PI / 180;
+          var x3 = Math.sin(phi) * Math.cos(theta);
+          var y3 = Math.cos(phi);
+          var z3 = Math.sin(phi) * Math.sin(theta);
+          if (z3 < 0) continue;
+          var px = cx + x3 * R;
+          var py = cy - y3 * R;
+          var depth = (z3 + 1) / 2;
+          var fadeX = (px - cx) / R;
+          var fadeY = (py - cy) / R;
+          var edgeFade = Math.max(0, 1 - (fadeX*fadeX + fadeY*fadeY) * 1.6);
+          var alpha = depth * edgeFade;
+          var dotR, color;
+          if (ft === 'mare') {
+            color = 'rgba(90,88,75,' + (alpha * 0.5).toFixed(2) + ')';
+            dotR = 2.2 * (0.5 + depth * 0.5);
+          } else if (ft === 'crater') {
+            color = 'rgba(80,78,65,' + (alpha * 0.4).toFixed(2) + ')';
+            dotR = 1.8 * (0.5 + depth * 0.5);
+          } else {
+            color = 'rgba(200,196,185,' + (alpha * 0.6).toFixed(2) + ')';
+            dotR = 1.4 * (0.5 + depth * 0.5);
+          }
+          ctx.beginPath();
+          ctx.arc(px, py, dotR, 0, Math.PI*2);
+          ctx.fillStyle = color;
+          ctx.fill();
+        }
+      }
+
+      var shad = ctx.createRadialGradient(cx+50, cy+35, 0, cx, cy, R);
+      shad.addColorStop(0.5, 'rgba(0,0,0,0)');
+      shad.addColorStop(1, 'rgba(0,0,0,0.12)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.fillStyle = shad;
+      ctx.fill();
+
+      var shine = ctx.createRadialGradient(cx-45, cy-45, 5, cx-30, cy-30, 70);
+      shine.addColorStop(0, 'rgba(255,255,255,0.3)');
+      shine.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.fillStyle = shine;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(160,155,140,0.4)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function loop() {
+      offset += 0.3;
+      draw();
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
+
   // Hamburger menu
   (function() {
     var hamburger = document.querySelector('.nav-hamburger');
