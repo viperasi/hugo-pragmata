@@ -1,12 +1,12 @@
 {{ define "body" }}
 <div class="page-body">
   {{ partial "sidebar.html" . }}
-  <main class="page-content" style="text-align:center;">
+  <main class="page-content">
     {{ partial "breadcrumb.html" . }}
 
     <div class="sec-head" style="justify-content:center;">{{ .Title | upper }}</div>
 
-    <div class="tag-cloud">
+    <div class="tag-cloud" style="text-align:center;">
       {{ $max := 0 }}
       {{ $min := 999 }}
       {{ range .Pages }}

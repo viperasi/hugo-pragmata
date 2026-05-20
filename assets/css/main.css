@@ -13,7 +13,6 @@
 @font-face { font-family: 'Barlow Condensed'; font-weight: 400; font-style: normal; font-display: swap; src: url('/fonts/barlow-400.ttf') format('truetype'); }
 @font-face { font-family: 'Barlow Condensed'; font-weight: 500; font-style: normal; font-display: swap; src: url('/fonts/barlow-500.ttf') format('truetype'); }
 @font-face { font-family: 'Barlow Condensed'; font-weight: 600; font-style: normal; font-display: swap; src: url('/fonts/barlow-600.ttf') format('truetype'); }
-
 /* ── Design Tokens ── */
 :root {
   --bg:       #e8eae6;
@@ -821,7 +820,7 @@ img { max-width: 100%; height: auto; }
 .error-card {
   background: var(--bg2);
   border: 1px solid var(--line);
-  max-width: 420px;
+  max-width: 580px;
   width: 100%;
   position: relative;
   border-left: 4px solid var(--red-btn);
@@ -829,33 +828,33 @@ img { max-width: 100%; height: auto; }
 
 .error-card .card-body {
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 3rem 2.5rem;
 }
 
 .error-code {
   font-family: var(--disp);
-  font-size: 64px;
+  font-size: 96px;
   font-weight: 600;
   color: var(--red-btn);
-  letter-spacing: 4px;
+  letter-spacing: 6px;
   line-height: 1;
 }
 
 .error-title {
   font-family: var(--disp);
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 500;
   color: var(--text);
-  letter-spacing: 2px;
-  margin-top: 8px;
+  letter-spacing: 3px;
+  margin-top: 12px;
 }
 
 .error-desc {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text3);
   letter-spacing: 0.5px;
-  margin-top: 10px;
+  margin-top: 14px;
   line-height: 1.8;
 }
 
@@ -863,14 +862,14 @@ img { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--red-btn);
   border: 2px solid #901810;
   color: #fff;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
